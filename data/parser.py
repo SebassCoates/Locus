@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
-rawData = np.array(pd.read_csv('page_hits.csv', encoding='latin-1'))
+rawData = np.array(pd.read_csv("page_hits.csv", encoding='latin-1'))
 
 
 #date format: mm/dd/yyyy HH:MM:SS (A/P)M
@@ -25,12 +25,14 @@ def day_of_week(datestring):
         return date.weekday()
 
 def duration(startTime, endTime):
-        time1 = startTime.split(' ')[1]
-        time2 = endTime.split(' ')[1]
+        time1 = startTime.split(' ')[1].split(':')
+        time2 = endTime.split(' ')[1].split(':')
         if int(time2[0]) < int(time1[0]): #time got wrapped after midnight
                 time2[0] = int(time2[0]) + 24
 
-        return (int(time2[0]) - int(time1[0])) * 3600 + (int(time2[1]) - int(time1[1])) * 60 + (int(time2[0]) - int(time1[0]))#convert to seconds
+        secondDifference = (int(time2[0]) - int(time1[0])) * 3600 + (int((time2[1])) - int((time1[1]))) * 60 + (int(float(time2[2])) - int(float(time1[2])))#convert to seconds
+        
+        return secondDifference 
 
 
 #Map the following features to unique indices
@@ -45,7 +47,7 @@ numPaths = 0
 num_features = 7 #id, ext/int, region, time, duration, path
 
 num_rows = np.shape(rawData)[0]
-data = np.empty((num_rows, num_features), dtype='int32')
+data = np.zeros((num_rows, num_features), dtype='int32')
 
 for i, row in enumerate(rawData):
         for j, value in enumerate(row):
@@ -75,12 +77,35 @@ for i, row in enumerate(rawData):
                         data[i][4] = duration(rawData[i][5], value)
 
                 elif j == 7:
-                        if "//" == value:
+                        if "\\\\" in value[:2]: #ignore local files
+                                data[i][5] = -1 #signals invalid row, DON'T PRINT
                                 continue
-                                print('ignoring local file')
                         if value not in paths:
                                 paths[value] = numPaths
                                 numPaths += 1
                         data[i][5] = paths[value]
 
-print(data)               
+pathCounts = np.zeros((numIds, numPaths), dtype='int32')
+
+for i in range(num_rows):
+        userid = data[i][0]
+        pathid = data[i][5]
+
+        if pathid != -1:
+                pathCounts[userid][pathid] += 1
+
+labels = []
+for pathCount in pathCounts:
+        labels.append((list(pathCount).index(max(pathCount))))
+
+feature_file = open("features.txt", 'w')
+for i, row in enumerate(data):
+        for j, elem in enumerate(row):
+                feature_file.write(str(elem) + ", ")
+        feature_file.write("\n")
+feature_file.close()
+
+label_file = open("labels.txt", "w")
+for label in labels:
+        label_file.write(str(label) + ', ')
+label_file.close()
