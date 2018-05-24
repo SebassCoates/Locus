@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.2.7)  24 MAY 2018 13:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.2.7)  24 MAY 2018 14:41
 entering extended mode
 **C:/Users/sebas/AppData/Local/lxss/home/scoate02/locus/design/design.tex
 (C:/Users/sebas/AppData/Local/lxss/home/scoate02/locus/design/design.tex
@@ -373,33 +373,82 @@ LaTeX Font Info:    Try loading font information for U+rsfs on input line 11.
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 ) [1
 
-{C:/Users/sebas/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 63.
- [2
+{C:/Users/sebas/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 63.
+Underfull \hbox (badness 10000) in paragraph at lines 23--29
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--38
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--41
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--53
+
+ []
+
+[3
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 62--67
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--74
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 75--78
+
+ []
+
+[4
+
+] [5
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 126.
+ [6
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 126.
  (design.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 63.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 63.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 126.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 126.
 Package rerunfilecheck Info: File `design.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 63.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 126.
  ) 
 Here is how much of TeX's memory you used:
- 6496 strings out of 493333
- 93312 string characters out of 3139195
- 184953 words of memory out of 3000000
- 9954 multiletter control sequences out of 15000+200000
- 12184 words of font info for 50 fonts, out of 3000000 for 9000
+ 6512 strings out of 493333
+ 93463 string characters out of 3139195
+ 183926 words of memory out of 3000000
+ 9956 multiletter control sequences out of 15000+200000
+ 12799 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  28i,6n,26p,296b,320s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on design.pdf (2 pages, 52543 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on design.pdf (6 pages, 80832 bytes).
 PDF statistics:
- 28 PDF objects out of 1000 (max. 8388607)
- 4 named destinations out of 1000 (max. 500000)
+ 64 PDF objects out of 1000 (max. 8388607)
+ 17 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
-
