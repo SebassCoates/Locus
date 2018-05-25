@@ -7,26 +7,10 @@ filename = os.path.join(dirname, 'content.html')
 
 @app.route('/', methods=["GET"])
 def home():
-    return """
-        <!DOCTYPE html>
-        <html lang="en">
+    return open('./home.html', 'r').read()
 
-	        <head>
-		        <meta charset="utf-8"/>
-		        <title>Sample</title>
-	        </head>
-	
-            <body>
-                <h1>
-                    test header 1 updated
-                </h1>
-                html content rendered!
-            </body>
-           
-        </html>"""
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['POST', 'GET'])
 def content():
-    error = None
-    if request.method == 'POST':
-        
+
+    postData = request.form
+    

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta content="width=device-width, initial-scale=1">
-        <style>
+		<style>
 			* {
 				box-sizing: border-box;
 				background-color: #f8f8ff;
@@ -21,8 +21,7 @@
 			input[type=text], select, textarea {
                 width: 300px;
                 padding: 12px 12px;
-                border: 1px solid;
-                border-color: rgb(194, 194, 194);
+                border: 1px solid #ccc;
                 border-radius: 4px;
                 resize: vertical;
             }
@@ -64,9 +63,13 @@
         <h1>Dynamic Locus Display</h1>
         <p id="authors">Created by: Sebastian Coates and Prabhath Kotha</p>
 		<div class="container">
-			<form action="/action_page.php" onsubmit="return validateForm()" method="post"></form>
-                <input type="text" id="userID" name="ID" placeholder="User ID">
+			<form method="post">
+                <input type="text" id="user" name="userID" placeholder="User ID">
                 <br>
+                <label class="container">One
+                    <input type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
                 <br>
                 <input type="submit" id="submit" name ="sub">
             </form>
