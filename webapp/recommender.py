@@ -78,6 +78,7 @@ def id_to_page_name(index):
 
 
 def probability_to_indices(guess):
+        guess = guess[0]
         NUM_GUESSES = 10
         
         predictions = []
@@ -86,7 +87,8 @@ def probability_to_indices(guess):
             #Note, because labels are ordered ascending by parser, no need to use classifier.classes_
             labelGuess = list(guess).index(bestGuess)
             predictions.append(labelGuess)
-
+            if bestGuess == 0:
+                break
         return predictions
 
 def predict10(features):
@@ -102,7 +104,7 @@ def predict10(features):
 
         features = np.array(features, dtype='int32')
 
-        for index in probability_to_indices(classifier.predict(features.reshape(1, -1))):
+        for index in probability_to_indices(classifier.predict_proba(features.reshape(1, -1))):
                 pages.append(id_to_page_name(str(index)))
 
         return pages
