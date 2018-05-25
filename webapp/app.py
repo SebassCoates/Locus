@@ -2,6 +2,7 @@ from flask import Flask, request
 import os.path
 from time import gmtime, strftime
 from recommender import *
+from collections import OrderedDict
 
 app = Flask("DynamicLocus")
 
@@ -15,19 +16,28 @@ def home():                                             #render home page
 @app.route('/', methods=['POST', 'GET'])
 def content():                                          #handle post request and render content page
     features = generateFeatureList(request.form)
-    suggestionList = predict10(features)
-    #exploreList = explore10(features[3])
+    date = features[3]
+    suggestionList = predict10(features)                #modifies features by reference
+    exploreList = explore10(date)
+
+    suggestionList = list(OrderedDict.fromkeys(suggestionList))     #remove duplicate suggestions
+    exploreList = list(OrderedDict.fromkeys(exploreList))
 
     suggested = ''                                      #Start: document manipulation
     explore = ''
     for i in range(len(suggestionList)):
+        suggested += '<a onClick="window.location.reload()" id="sug">'
         suggested += suggestionList[i]
-        #explore += exploreList[i]
-        suggested += '<br>'
-        #explore += '<br>'
+        suggested += '</a>'
+        suggested += '<br><br>'
+    for i in range(len(exploreList)):
+        explore += '<a onClick="window.location.reload()" id="sug">'
+        explore += exploreList[i]
+        explore += '</a>'
+        explore += '<br><br>'
     content = open('./content.html', 'r').read()
     content = content.replace('ReplaceTextNodeWithSuggested', suggested)
-    #content = content.replace('ReplaceTextNodeWithExplore', explore)    #End: document manipulation
+    content = content.replace('ReplaceTextNodeWithExplore', explore)    #End: document manipulation
 
     return content
 
