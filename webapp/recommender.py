@@ -109,5 +109,5 @@ def predict10(features):
 
         return pages
 
-def explore10(features):
-        pass
+def explore10(date):
+    return list(pathDict.values())[0:10]
