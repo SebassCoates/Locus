@@ -32,7 +32,7 @@ def duration(startTime, endTime):
 
         secondDifference = (int(time2[0]) - int(time1[0])) * 3600 + (int((time2[1])) - int((time1[1]))) * 60 + (int(float(time2[2])) - int(float(time1[2])))#convert to seconds
         
-        return secondDifference 
+        return abs(secondDifference) 
 
 
 #Map the following features to unique indices
@@ -87,25 +87,28 @@ for i, row in enumerate(rawData):
 
 pathCounts = np.zeros((numIds, numPaths), dtype='int32')
 
+doNotPrint = set()
 for i in range(num_rows):
         userid = data[i][0]
         pathid = data[i][5]
 
         if pathid != -1:
                 pathCounts[userid][pathid] += 1
+        else:
+                doNotPrint.add(i)
 
 labels = []
 for pathCount in pathCounts:
         labels.append((list(pathCount).index(max(pathCount))))
 
 feature_file = open("features.txt", 'w')
-for i, row in enumerate(data):
-        for j, elem in enumerate(row):
-                feature_file.write(str(elem) + ", ")
-        feature_file.write("\n")
-feature_file.close()
-
 label_file = open("labels.txt", "w")
-for label in labels:
-        label_file.write(str(label) + ', ')
+for i, row in enumerate(data):
+        if i not in doNotPrint:
+            for j, elem in enumerate(row):
+                    feature_file.write(str(elem) + ", ")
+            feature_file.write("\n")
+            label_file.write(str(labels[data[i][0]]) + ", ")
+feature_file.close()
 label_file.close()
+
