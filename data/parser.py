@@ -19,6 +19,8 @@ def date_to_int(datestring):
                 return 2
         return 1
 
+<<<<<<< HEAD
+=======
 def fiscal_quarter(datestring):
         month = int(value.split(' ')[0].split('-')[1])
         if month < 3:
@@ -29,6 +31,7 @@ def fiscal_quarter(datestring):
                 return 2
         return 3
 
+>>>>>>> 8afcbdb25f5acc054ffa71db731d286c161e2c88
 def day_of_week(datestring):
         ymd = datestring.split(' ')[0].split('-')
         date = datetime.date(int(ymd[0]), int(ymd[1]), int(ymd[2]))
@@ -58,7 +61,10 @@ num_features = 7 #id, ext/int, region, time, duration, path
 
 num_rows = np.shape(rawData)[0]
 data = np.zeros((num_rows, num_features), dtype='int32')
+<<<<<<< HEAD
+=======
 labels = np.zeros((num_rows), dtype='int32')
+>>>>>>> 8afcbdb25f5acc054ffa71db731d286c161e2c88
 
 for i, row in enumerate(rawData):
         for j, value in enumerate(row):
@@ -82,6 +88,37 @@ for i, row in enumerate(rawData):
 
                 elif j == 5: #time block, morning midday night (0, 1, 2)
                         data[i][3] = date_to_int(value)
+<<<<<<< HEAD
+                        data[i][6] = day_of_week(value)
+
+                elif j == 6:
+                        data[i][4] = duration(rawData[i][5], value)
+
+                elif j == 7:
+                        if "\\\\" in value[:2]: #ignore local files
+                                data[i][5] = -1 #signals invalid row, DON'T PRINT
+                                continue
+                        if value not in paths:
+                                paths[value] = numPaths
+                                numPaths += 1
+                        data[i][5] = paths[value]
+
+pathCounts = np.zeros((numIds, numPaths), dtype='int32')
+
+doNotPrint = set()
+for i in range(num_rows):
+        userid = data[i][0]
+        pathid = data[i][5]
+
+        if pathid != -1:
+                pathCounts[userid][pathid] += 1
+        else:
+                doNotPrint.add(i)
+
+labels = []
+for pathCount in pathCounts:
+        labels.append((list(pathCount).index(max(pathCount))))
+=======
                         data[i][4] = fiscal_quarter(value)
                         data[i][5] = day_of_week(value)
                         data[i][6] = int(value.split(' ')[0].split('-')[1]) #month
@@ -96,10 +133,21 @@ for i, row in enumerate(rawData):
                                 paths[value] = numPaths
                                 numPaths += 1
                         labels[i] = paths[value]
+>>>>>>> 8afcbdb25f5acc054ffa71db731d286c161e2c88
 
 feature_file = open("features.txt", 'w')
 label_file = open("labels.txt", "w")
 for i, row in enumerate(data):
+<<<<<<< HEAD
+        if i not in doNotPrint:
+            for j, elem in enumerate(row):
+                    feature_file.write(str(elem) + ", ")
+            feature_file.write("\n")
+            label_file.write(str(labels[data[i][0]]) + ", ")
+feature_file.close()
+label_file.close()
+
+=======
         if labels[i] != -1:
             for j, elem in enumerate(row):
                     feature_file.write(str(elem) + ", ")
@@ -107,3 +155,4 @@ for i, row in enumerate(data):
             label_file.write(str(labels[i]) + ", ")
 feature_file.close()
 label_file.close()
+>>>>>>> 8afcbdb25f5acc054ffa71db731d286c161e2c88

@@ -9,6 +9,7 @@ import numpy as np
 
 ############################# READ AND PARSE DATA ##############################
 print("Reading features and label data")
+>>>>>>> 8afcbdb25f5acc054ffa71db731d286c161e2c88
 features = open('features.txt', 'r').read().split('\n')
 features = features[0:len(features) - 1]
 for i,feature in enumerate(features):
@@ -82,15 +83,12 @@ outfile.close
 #print()
 
 #Test gradient boosting of varied number of estimators with cross validation
-#print("Gradient Boosting")
-#numEstimators = [i for i in range(25, 39, 1)]
-#for num in numEstimators:
-#    classifier = GradientBoostingClassifier(n_estimators=num)
-#    print("Fitting model")
-#    classifier.fit(X_train, Y_train)
-#    print("Evaluating best guess accuracy for K = " + str(K))
-#    print(classifier.score(X_test, Y_test))
-#    print("Evaluating top-n guess accuracy")
-#    evaluate(classifier.predict_proba(X_test), Y_test)
-#    print()
-#print()
+print("Gradient Boosting")
+numEstimators = [i for i in range(25, 39, 1)]
+for num in numEstimators:
+    classifier = GradientBoostingClassifier(n_estimators=num) 
+    scores = cross_val_score(classifier, features, labels, cv=5)
+    print("Error: %0.3f (+/- %0.3f) for num_estimators=%d" % (1 - scores.mean(), scores.std() * 2, num))
+print()
+>>>>>>> 8afcbdb25f5acc054ffa71db731d286c161e2c88
+>>>>>>> 3578e49180d7abc2288531c34c21901beca3cb37:data/evaluate_bayes.py
