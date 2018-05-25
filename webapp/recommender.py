@@ -2,6 +2,7 @@ import pickle
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 import datetime
+import random as rand
 
 buckets = [b.split() for b in open('buckets.txt', 'r').read().split('\n')][0:3]
 
@@ -14,6 +15,7 @@ for pair in regionText:
                 regionDict[name] = index
         except:
                 print(pair)
+maxRegion = max(np.array(list(regionDict.values()), dtype='int32'))
 
 idDict = {}
 idText = open("ids.txt", 'r').read().split('\n')
@@ -21,6 +23,7 @@ idText.remove('')
 for pair in idText:
         name, index = pair.split(',')
         idDict[name] = index
+maxID = max(np.array(list(idDict.values()), dtype = 'int32'))
 
 pathDict = {}
 pathText = open("paths.txt", 'r').read().split('\n')
@@ -95,8 +98,14 @@ def probability_to_indices(guess):
 def predict10(features):
         pages = []
 
-        features[0] = id_string_to_index(features[0])
-        features[2] = region_string_to_index(features[2])
+        if features[0] in idDict:
+            features[0] = id_string_to_index(features[0])
+        else:
+            features[0] = rand.randint(0,maxID)
+        if features[2] in regionDict:
+            features[2] = region_string_to_index(features[2])
+        else:
+            features[2] = rand.randint(0,maxRegion) 
         datestring = features[3]
         features[3] = date_to_int(datestring)
         features.append(fiscal_quarter(datestring))
