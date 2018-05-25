@@ -3,6 +3,7 @@ from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 import datetime
 
+buckets = [b.split() for b in open('buckets.txt', 'r').read().split('\n')][0:3]
 
 regionDict = {}
 regionText = open("regions.txt", 'r').read().split('\n')
@@ -110,4 +111,7 @@ def predict10(features):
         return pages
 
 def explore10(date):
+    pages = []
+    for index in buckets[date_to_int(date)]:
+        pages.append(id_to_page_name(str(index)))
     return list(pathDict.values())[0:10]
