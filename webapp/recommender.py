@@ -124,3 +124,6 @@ def explore10(date):
     for index in buckets[date_to_int(date)]:
         pages.append(id_to_page_name(str(index)))
     return list(pathDict.values())[0:10]
+
+def next_sites(currentsite):
+    return []   
