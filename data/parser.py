@@ -100,6 +100,21 @@ for i, row in enumerate(rawData):
                                 numPaths += 1
                         labels[i] = paths[value]
 
+counts = [{}, {}, {}] # for exploring popular pages
+for i, row in enumerate(data):
+    d = counts[data[i][3]]
+    if d.get(labels[i]) == None:
+        d[labels[i]] = 0
+    else:
+        d[labels[i]] += 1
+
+countfile = open("buckets.txt", 'w')
+for d in counts:
+    for w in sorted(d, key=d.get, reverse=True)[0:10]:
+        countfile.write(str(w) + ' ')
+    countfile.write('\n')
+countfile.close()
+
 idfile = open('ids.txt', 'w')
 for idtext in ids:
     idfile.write(str(idtext) + "," + str(ids[idtext]))
