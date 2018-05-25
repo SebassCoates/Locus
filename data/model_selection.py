@@ -4,6 +4,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+import pickle
 import numpy as np
 
 ############################# READ AND PARSE DATA ##############################
@@ -35,48 +36,61 @@ def evaluate(guesses, correctLabels):
     print("Best Guess Accuracy: " + str(correctGuessCount / len(correctLabels)))
 
 
+############################## EXPORT TRAINED MODEL ############################
+classifier = KNeighborsClassifier(101)
+model = classifier.fit(features, labels)
+s = pickle.dumps(model)
+outfile = open('page_predictor', 'wb')
+outfile.write(s)
+outfile.close
+
 ############################### EVALUATE RESULTS ###############################
-print("Testing Random Forest")
-depths = [1,3,7,13,21,40,75,100]
-for d in depths:
-    classifier = RandomForestClassifier(max_depth=d, random_state=0)
-    print("Fitting model")
-    classifier.fit(X_train, Y_train)
-    print("Evaluating best guess accuracy for depth = " + str(d))
-    print(classifier.score(X_test, Y_test))
+#print("Testing Random Forest")
+#depths = [1,3,7,13,21,40,75,100]
+#for d in depths:
+#    classifier = RandomForestClassifier(max_depth=d, random_state=0)
+#    print("Fitting model")
+#    classifier.fit(X_train, Y_train)
+#    print("Evaluating best guess accuracy for depth = " + str(d))
+#    print(classifier.score(X_test, Y_test))
     #print("Evaluating top-n guess accuracy")
     #evaluate(classifier.predict_log_proba(X_test), Y_test)
-    print()
+#    print()
 
 #Test KKN of various k values with cross validation
-print("Testing KNN")
-Ks = [101]
-for K in Ks:
-    classifier = KNeighborsClassifier(K)
-    print("Fitting model")
-    classifier.fit(X_train, Y_train)
-    print("Evaluating best guess accuracy for K = " + str(K))
-    print(classifier.score(X_test, Y_test))
-    print("Evaluating top-n guess accuracy")
-    evaluate(classifier.predict_log_proba(X_test), Y_test)
-    print()
+#print("Testing KNN")
+#Ks = [101]
+#for K in Ks:
+#    classifier = KNeighborsClassifier(K)
+#    print("Fitting model")
+#    classifier.fit(X_train, Y_train)
+#    print("Evaluating best guess accuracy for K = " + str(K))
+#    print(classifier.score(X_test, Y_test))
+#    print("Evaluating top-n guess accuracy")
+#    evaluate(classifier.predict_proba(X_test), Y_test)
+#    print()
 
 
-print("Testing GaussianNB")
-classifier = GaussianNB()
-print("Fitting model")
-classifier.fit(X_train, Y_train)
-print("Evaluating best guess accuracy")
-print(classifier.score(X_test, Y_test))
-print("Evaluating top-n guess accuracy")
-evaluate(classifier.predict_log_proba(X_test), Y_test)
-print()
+#print("Testing GaussianNB")
+#classifier = GaussianNB()
+#print("Fitting model")
+#classifier.fit(X_train, Y_train)
+#print("Evaluating best guess accuracy")
+#print(classifier.score(X_test, Y_test))
+#print("Evaluating top-n guess accuracy")
+#evaluate(classifier.predict_log_proba(X_test), Y_test)
+#print()
 
 #Test gradient boosting of varied number of estimators with cross validation
-print("Gradient Boosting")
-numEstimators = [i for i in range(25, 39, 1)]
-for num in numEstimators:
-    classifier = GradientBoostingClassifier(n_estimators=num) 
-    scores = cross_val_score(classifier, features, labels, cv=5)
-    print("Error: %0.3f (+/- %0.3f) for num_estimators=%d" % (1 - scores.mean(), scores.std() * 2, num))
-print()
+#print("Gradient Boosting")
+#numEstimators = [i for i in range(25, 39, 1)]
+#for num in numEstimators:
+#    classifier = GradientBoostingClassifier(n_estimators=num)
+#    print("Fitting model")
+#    classifier.fit(X_train, Y_train)
+#    print("Evaluating best guess accuracy for K = " + str(K))
+#    print(classifier.score(X_test, Y_test))
+#    print("Evaluating top-n guess accuracy")
+#    evaluate(classifier.predict_proba(X_test), Y_test)
+#    print()
+#print()
