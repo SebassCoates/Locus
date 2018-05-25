@@ -37,12 +37,12 @@ for pair in pathText:
 maxPath = max(np.array(list(pathDict.keys()), dtype='int32'))
 
 # next page predictor
-look_back=1
-model = Sequential()
-model.add(LSTM(4, input_shape=(1, look_back)))
-model.add(Dense(1))
-model.load_weights('time_predictor.h5', by_name=True)
-model.compile(loss='mean_squared_error', optimizer='adam')
+#look_back=1
+#model = Sequential()
+#model.add(LSTM(4, input_shape=(1, look_back)))
+#model.add(Dense(1))
+#model.compile(loss='mean_squared_error', optimizer='adam')
+#model.load_weights('time_predictor.h5')
 
 # page recommender
 classifier = pickle.load(open('page_predictor', 'rb'))
@@ -143,11 +143,20 @@ def explore10(date):
     return list(pathDict.values())[0:10]
 
 def next_sites(currentsite):
+    # next page predictor
+    look_back=1
+    model = Sequential()
+    model.add(LSTM(4, input_shape=(1, look_back)))
+    model.add(Dense(1))
+    model.compile(loss='mean_squared_error', optimizer='adam')
+    model.load_weights('time_predictor.h5')
+
     x = [page_name_to_id(currentsite)]
     if x[0] == -1:
         x[0] = rand.randint(0, maxPath)
     
     x = np.reshape(x, (1,1,-1))
+    x = np.array(x, dtype='int32')
     prediction = model.predict(x)
     try:
         return [id_to_page_name(str(int(prediction[0])))]   

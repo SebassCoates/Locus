@@ -5,6 +5,8 @@ from recommender import *
 from collections import OrderedDict
 
 app = Flask("DynamicLocus")
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port='5000', threaded=False)
 
 dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'content.html')
@@ -48,11 +50,15 @@ def mockPage():
     pageString = open('./page.html', 'r').read()
     siteName = request.args.get("site")
     pageString = pageString.replace('ReplaceWithMockSiteName', siteName)
-    nextSite = next_sites(siteName)
-    queryString = '?site='+nextSite
-    nextSiteLink = '<a href="/page"'+queryString+'>'+siteName+'</a>'
-    pageString.replace('ReplaceWithNextSite', nextSite)
-    return pageString
+    try:
+        nextSite = next_sites(siteName)[0]
+    except:
+        nextSite = "No prediction available"
+    #print(nextSite)
+    queryString = '?site='+(nextSite)
+    nextSiteLink = '<a href="/page'+queryString+'">' + nextSite + '</a>'
+    #print(nextSiteLink)
+    return pageString.replace('ReplaceWithNextSite', nextSiteLink)
 
 def generateFeatureList(postData):                      #formatted list of features from post data
     userID = postData.get('userID')
