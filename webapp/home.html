@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="width=device-width, initial-scale=1">
+        <style>
+			* {
+				box-sizing: border-box;
+				background-color: #f8f8ff;
+                font-family: Helvetica;
+			}
+            
+            h1 {
+				text-align: center;
+			}
+            
+            #authors {
+                text-align: center;
+                color: rgb(194, 194, 194);
+                padding-bottom: 40px;
+            }
+			input[type=text], select, textarea {
+                width: 300px;
+                padding: 12px 12px;
+                border: 1px solid;
+                border-color: rgb(194, 194, 194);
+                border-radius: 4px;
+                resize: vertical;
+            }
+
+            label {
+                padding-bottom: 12px;
+                display: inline-block;
+                text-align: center;
+            }
+
+            input[type=submit] {
+                background-color: rgb(0, 0, 0);
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+                background-color: rgb(194, 194, 194);
+                color: black;
+            }
+
+            .container {
+                border-radius: 5px;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .container.buttonHolder {
+                text-align: center;
+            }
+
+		</style>
+	</head>
+
+	<body>
+        <h1>Dynamic Locus Display</h1>
+        <p id="authors">Created by: Sebastian Coates and Prabhath Kotha</p>
+		<div class="container">
+			<form action="/action_page.php" onsubmit="return validateForm()" method="post"></form>
+                <input type="text" id="userID" name="ID" placeholder="User ID">
+                <br>
+                <br>
+                <input type="submit" id="submit" name ="sub">
+            </form>
+		</div>
+	</body>
+</html>
