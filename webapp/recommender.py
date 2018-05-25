@@ -3,6 +3,9 @@ from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 import datetime
 import random as rand
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
 
 buckets = [b.split() for b in open('buckets.txt', 'r').read().split('\n')][0:3]
 
@@ -31,8 +34,17 @@ pathText.remove('')
 for pair in pathText:
         name, index = pair.split(',')
         pathDict[index] = name
+maxPath = max(np.array(list(pathDict.keys()), dtype='int32'))
 
+# next page predictor
+#look_back=1
+#model = Sequential()
+#model.add(LSTM(4, input_shape=(1, look_back)))
+#model.add(Dense(1))
+#model.compile(loss='mean_squared_error', optimizer='adam')
+#model.load_weights('time_predictor.h5')
 
+# page recommender
 classifier = pickle.load(open('page_predictor', 'rb'))
 
 #date format: mm/dd/yyyy HH:MM:SS (A/P)M
@@ -80,6 +92,11 @@ def id_string_to_index(idstring):
 def id_to_page_name(index):
         return pathDict[index]
 
+def page_name_to_id(name):
+        for i in pathDict:
+            if pathDict[i] == name:
+                return i
+        return -1
 
 def probability_to_indices(guess):
         guess = guess[0]
@@ -126,4 +143,23 @@ def explore10(date):
     return list(pathDict.values())[0:10]
 
 def next_sites(currentsite):
-    return []   
+    # next page predictor
+    look_back=1
+    model = Sequential()
+    model.add(LSTM(4, input_shape=(1, look_back)))
+    model.add(Dense(1))
+    model.compile(loss='mean_squared_error', optimizer='adam')
+    model.load_weights('time_predictor.h5')
+
+    x = [page_name_to_id(currentsite)]
+    if x[0] == -1:
+        x[0] = rand.randint(0, maxPath)
+    
+    x = np.reshape(x, (1,1,-1))
+    x = np.array(x, dtype='int32')
+    prediction = model.predict(x)
+    try:
+        return [id_to_page_name(str(int(prediction[0])))]   
+    except:
+        print("Err: bad prediction by RNN")
+        return id_to_page_name(str(rand.randint(0, maxPath)))

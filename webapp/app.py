@@ -5,6 +5,8 @@ from recommender import *
 from collections import OrderedDict
 
 app = Flask("DynamicLocus")
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port='5000', threaded=False)
 
 dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'content.html')
@@ -13,7 +15,7 @@ filename = os.path.join(dirname, 'content.html')
 def home():                                             #render home page
     return open('./home.html', 'r').read()
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['POST'])
 def content():                                          #handle post request and render content page
     features = generateFeatureList(request.form)
     date = features[3]
@@ -26,12 +28,14 @@ def content():                                          #handle post request and
     suggested = ''                                      #Start: document manipulation
     explore = ''
     for i in range(len(suggestionList)):
-        suggested += '<a onClick="window.location.reload()" id="sug">'
+        queryString = '?site=' + suggestionList[i]
+        suggested += '<a href="/page'+queryString+'" id="sug">'
         suggested += suggestionList[i]
         suggested += '</a>'
         suggested += '<br><br>'
     for i in range(len(exploreList)):
-        explore += '<a onClick="window.location.reload()" id="sug">'
+        queryString = '?site=' + exploreList[i]
+        explore += '<a href="/page' + queryString + '" id="sug">'
         explore += exploreList[i]
         explore += '</a>'
         explore += '<br><br>'
@@ -40,6 +44,21 @@ def content():                                          #handle post request and
     content = content.replace('ReplaceTextNodeWithExplore', explore)    #End: document manipulation
 
     return content
+
+@app.route('/page', methods=['GET'])
+def mockPage():
+    pageString = open('./page.html', 'r').read()
+    siteName = request.args.get("site")
+    pageString = pageString.replace('ReplaceWithMockSiteName', siteName)
+    try:
+        nextSite = next_sites(siteName)[0]
+    except:
+        nextSite = "No prediction available"
+    #print(nextSite)
+    queryString = '?site='+(nextSite)
+    nextSiteLink = '<a href="/page'+queryString+'">' + nextSite + '</a>'
+    #print(nextSiteLink)
+    return pageString.replace('ReplaceWithNextSite', nextSiteLink)
 
 def generateFeatureList(postData):                      #formatted list of features from post data
     userID = postData.get('userID')
