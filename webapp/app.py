@@ -1,5 +1,8 @@
 from flask import Flask, request
 import os.path
+from time import gmtime, strftime
+from recommender import *
+
 app = Flask("DynamicLocus")
 
 dirname = os.path.dirname(__file__)
@@ -11,6 +14,19 @@ def home():
 
 @app.route('/', methods=['POST', 'GET'])
 def content():
-
     postData = request.form
-    print(postData.get('userID'))
+    userID = postData.get('userID')
+    isInternal = 1
+    if postData.get('internal') != 'internal':
+        isInternal = 0
+    region = postData.get('region')
+    time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+
+    features = [userID, isInternal, region, time]
+
+    suggestions = predict10(features)
+
+    
+
+
+
