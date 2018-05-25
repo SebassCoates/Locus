@@ -13,23 +13,20 @@
 				text-align: center;
 			}
             
+            #spacing {
+                /* padding-top: 5px; */
+            }
             #authors {
                 text-align: center;
                 color: rgb(194, 194, 194);
                 padding-bottom: 40px;
             }
-			input[type=text], select, textarea {
+			input[type=text] {
                 width: 300px;
                 padding: 12px 12px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 resize: vertical;
-            }
-
-            label {
-                padding-bottom: 12px;
-                display: inline-block;
-                text-align: center;
             }
 
             input[type=submit] {
@@ -64,12 +61,17 @@
         <p id="authors">Created by: Sebastian Coates and Prabhath Kotha</p>
 		<div class="container">
 			<form method="post">
-                <input type="text" id="user" name="userID" placeholder="User ID">
+                <div id="spacing">
+                    <input type="text" id="user" name="userID" placeholder="User ID">
+                </div>
                 <br>
-                <label class="container">One
-                    <input type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
+                <div id="spacing">
+                        <input type="text" id="internal" name="internal" placeholder="internal or external?">
+                    </div>
+                <br>
+                <div id="spacing">
+                    <input type="text" id="region" name="region" placeholder="Region">
+                </div>
                 <br>
                 <input type="submit" id="submit" name ="sub">
             </form>

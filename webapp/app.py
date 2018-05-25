@@ -13,4 +13,4 @@ def home():
 def content():
 
     postData = request.form
-    
+    print(postData.get('userID'))
