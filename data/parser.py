@@ -81,6 +81,7 @@ for i, row in enumerate(rawData):
                         data[i][2] = regions[value]
 
                 elif j == 5: #time block, morning midday night (0, 1, 2)
+                        data[i][3] = date_to_int(value)
                         data[i][4] = fiscal_quarter(value)
                         data[i][5] = day_of_week(value)
                         data[i][6] = int(value.split(' ')[0].split('-')[1]) #month
@@ -101,9 +102,21 @@ for i, row in enumerate(rawData):
 
 idfile = open('ids.txt', 'w')
 for idtext in ids:
-    idfile.write(str(idtext) + " " + str(ids[idtext]))
+    idfile.write(str(idtext) + "," + str(ids[idtext]))
     idfile.write('\n')
 idfile.close()    
+
+pathfile = open('paths.txt', 'w')
+for pathtext in paths:
+    pathfile.write(str(pathtext) + "," + str(paths[pathtext]))
+    pathfile.write('\n')
+pathfile.close()    
+
+regionfile = open('regions.txt', 'w')
+for regionText in regions:
+    regionfile.write(str(regionText) + "," + str(regions[regionText]))
+    regionfile.write('\n')
+regionfile.close()    
 
 feature_file = open("features.txt", 'w')
 label_file = open("labels.txt", "w")
